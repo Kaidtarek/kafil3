@@ -5,7 +5,7 @@ class houses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: GetFamilies(),),
+      body: Center(child: GetFamilies(Check_box: false,),),
     );
   }
 }

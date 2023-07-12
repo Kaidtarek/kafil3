@@ -42,6 +42,7 @@ dependencies:
   intl: 
   url_launcher: 
   timeago: 
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

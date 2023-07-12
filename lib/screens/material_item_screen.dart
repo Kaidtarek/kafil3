@@ -62,7 +62,7 @@ class MaterialScreen extends StatelessWidget {
                 SizedBox(height: 8),
             Container(
               height: 300,
-              child: GetFamilies( ),
+              child: GetFamilies( Check_box: true,),
             )
           ],
         ),

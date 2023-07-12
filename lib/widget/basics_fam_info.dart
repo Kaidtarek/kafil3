@@ -5,6 +5,8 @@ import '../Services/Family.dart';
 import 'beauty_item_look.dart';
 
 class GetFamilies extends StatefulWidget {
+  final bool Check_box;
+  GetFamilies({required this.Check_box});
   @override
   State<GetFamilies> createState() => _GetFamiliesState();
 }
@@ -120,7 +122,7 @@ class _GetFamiliesState extends State<GetFamilies> {
                                       },
                                       child: Text('see info'),
                                     ),
-                                   
+                                         if(widget.Check_box == true)
                                          Checkbox(
                                       value: selectedFamilies[familyId] ==
                                           familyId,

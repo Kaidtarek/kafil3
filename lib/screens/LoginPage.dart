@@ -231,13 +231,14 @@ class _LoginPageState extends State<LoginPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text(
-                                    "تسجيل دخول بدون حساب",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 51, 73, 70),
+                                  Center(
+                                    child: Text(
+                                      "تسجيل دخول بدون حساب",
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 51, 73, 70),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
