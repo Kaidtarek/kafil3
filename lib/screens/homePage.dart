@@ -1,7 +1,7 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kafil/admin_show/gridOfActions/stock.dart';
+import 'package:kafil/ui/stock.dart';
 import 'package:kafil/screens/camping.dart';
 import 'package:kafil/screens/houses.dart';
 import 'package:kafil/ui/Family_page.dart';
@@ -41,9 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
             TabItem(icon: Icons.family_restroom, title: 'العائلات'),
             TabItem(icon: Icons.volunteer_activism_rounded, title: 'نشاطات'),
             TabItem(icon: Icons.group, title: 'الأعضاء'),
-            TabItem(icon: Icons.home),
-            TabItem(icon: Icons.forest),
-            TabItem(icon: Icons.store),
+            TabItem(icon: Icons.home, title: 'المنازل'),
+            TabItem(icon: Icons.forest, title: 'التخييمات'),
+            TabItem(icon: Icons.store, title: 'المخزن'),
           ],
           initialActiveIndex: selectedpage,
           onTap: (int index) {
