@@ -236,11 +236,6 @@ class Employee {
   });
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: ProfilePage(),
-  ));
-}
 
 void _makePhoneCall(String phoneNumber) async {
   String url = 'tel:$phoneNumber';

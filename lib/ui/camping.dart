@@ -6,7 +6,16 @@ class camping extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add)),
-      body: Center(child: Text('camping'),),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(color: Colors.amber,child: Text('hello'),),
+            SizedBox(height: 16,),
+            Container(color: Colors.amber,child: Text('heillo'),),
+          ],
+        ),
+      ),
     );
   }
 }
