@@ -100,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           );
         },
-        child: Icon(Icons.add),
+        child: Image.asset('assets/add_employee.png'),
       ),
     );
   }

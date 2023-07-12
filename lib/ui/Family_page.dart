@@ -160,7 +160,7 @@ class _FamilyPageState extends State<FamilyPage> {
             MaterialPageRoute(builder: (context) => FamilyEditor()),
           );
         },
-        child: Icon(Icons.add),
+        child: Image.asset('assets/add_family.png'),
       ),
     );
   }

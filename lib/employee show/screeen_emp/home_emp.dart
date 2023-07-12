@@ -8,7 +8,7 @@ import 'package:kafil/employee%20show/screeen_emp/families.dart';
 import 'package:kafil/employee%20show/screeen_emp/houme_families_emp.dart';
 import 'package:kafil/employee%20show/screeen_emp/members.dart';
 import 'package:kafil/ui/stock.dart';
-import 'package:kafil/screens/camping.dart';
+import 'package:kafil/ui/camping.dart';
 import 'package:kafil/screens/houses.dart';
 import 'package:kafil/ui/Family_page.dart';
 import 'package:kafil/ui/employee.dart';

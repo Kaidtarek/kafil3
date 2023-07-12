@@ -39,7 +39,7 @@ class _MyItemsState extends State<MyItems> {
             });
           }
         },
-        child: Icon(Icons.add),
+        child: Image.asset('assets/add_item.png'),
       ),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

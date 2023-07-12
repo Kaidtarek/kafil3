@@ -2,7 +2,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kafil/ui/stock.dart';
-import 'package:kafil/screens/camping.dart';
+import 'package:kafil/ui/camping.dart';
 import 'package:kafil/screens/houses.dart';
 import 'package:kafil/ui/Family_page.dart';
 import 'package:kafil/ui/employee.dart';
