@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kafil/Services/Users.dart';
+import 'package:kafil/employee%20show/screeen_emp/home_emp.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -13,13 +14,13 @@ class _LoginPageState extends State<LoginPage> {
   late Users u;
   late String _email, _pwd;
   final _formKey = GlobalKey<FormState>();
+
   Future<void> validate() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       showDialog(
         context: context,
-        barrierDismissible:
-            false, // Prevent dismissing the dialog when tapping outside
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return Dialog(
             child: Container(
@@ -41,24 +42,25 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.of(context).pop();
       final msg = await u.login();
 
-      if (msg != "succes") {
+      if (msg != "success") {
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-              title: const Text("error"),
-              content: Text(msg),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop();
-                  },
-                  child: Container(
-                    color: Colors.green,
-                    padding: const EdgeInsets.all(14),
-                    child: const Text("okay"),
-                  ),
+            title: const Text("Error"),
+            content: Text(msg),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Container(
+                  color: Colors.green,
+                  padding: const EdgeInsets.all(14),
+                  child: const Text("OK"),
                 ),
-              ]),
+              ),
+            ],
+          ),
         );
       }
     }
@@ -68,35 +70,37 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Column(children: [
-            Container(
-              height: 100,
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                  child: Text(
-                "Login",
-                style: TextStyle(fontSize: 48),
-              )),
-            ),
-            SizedBox(
-              height: 100,
-            ),
-            Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 20, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: Text(
-                        "email",
-                        textAlign: TextAlign.start,
-                      ),
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Text(
+                      "Login",
+                      style: TextStyle(fontSize: 48),
                     ),
-                    Container(
+                  ),
+                ),
+                Image.asset('assets/logo.png',height: 200,width: 200,),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 20, bottom: 10),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: Text(
+                          "Email",
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      Container(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ClipRRect(
@@ -107,27 +111,29 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             validator: (val) {
                               if (val!.isEmpty) {
-                                return "this field can't be empty ";
+                                return "This field can't be empty";
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                                filled: true,
-                                border: InputBorder.none,
-                                fillColor: Color.fromARGB(125, 158, 158, 158)),
+                              filled: true,
+                              border: InputBorder.none,
+                              fillColor: Color.fromARGB(125, 158, 158, 158),
+                            ),
                           ),
-                        )),
-                    SizedBox(height: 50),
-                    Container(
-                      padding: EdgeInsets.only(left: 20, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: Text(
-                        "password",
-                        textAlign: TextAlign.start,
-                        style: TextStyle(fontFamily: "Poppins-Thin"),
+                        ),
                       ),
-                    ),
-                    Container(
+                      SizedBox(height: 50),
+                      Container(
+                        padding: EdgeInsets.only(left: 20, bottom: 10),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: Text(
+                          "Password",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(fontFamily: "Poppins-Thin"),
+                        ),
+                      ),
+                      Container(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ClipRRect(
@@ -139,37 +145,37 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             validator: (val) {
                               if (val!.isEmpty) {
-                                return "this field can't be empty ";
+                                return "This field can't be empty";
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _obscureText = !_obscureText;
-                                    });
-                                  },
-                                  child: Icon(
-                                    _obscureText
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
-                                  ),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureText
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
                                 ),
-                                filled: true,
-                                border: InputBorder.none,
-                                fillColor: Color.fromARGB(125, 158, 158, 158)),
+                              ),
+                              filled: true,
+                              border: InputBorder.none,
+                              fillColor: Color.fromARGB(125, 158, 158, 158),
+                            ),
                           ),
-                        )),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Container(
+                        ),
+                      ),
+                      SizedBox(height: 50),
+                      Container(
                         width: 100,
                         height: 50,
                         decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(90))),
+                          borderRadius: BorderRadius.all(Radius.circular(90)),
+                        ),
                         child: ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith(
@@ -183,10 +189,85 @@ class _LoginPageState extends State<LoginPage> {
                             "Sign in",
                             style: TextStyle(fontSize: 15),
                           ),
-                        )),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => Color.fromARGB(255, 100, 228, 228),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                          return welcom_emp();
+                        }));
+                      },
+                      child: Text(
+                        "Access as employee!",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4), // تم تحديث القيمة هنا
+                              title: Icon(
+                                Icons.help,
+                                size: 50,
+                                color: Colors.green,
+                              ),
+                              content: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "تسجيل دخول بدون حساب",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 51, 73, 70),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      height:
+                                          8), // تمت إضافة هذا العنصر لإضافة مساحة بين النصوص
+                                  Text(
+                                    "تسمح تسجيل الدخول بدون حساب للأسخاص الذين يريدون التطوع بايصال المساعدات الى عائلات اليتامى. من خلال هذه الخاصية تستطيع استعمال الخريطة للوصول الى منزل اليتيم  والاطلاع على المستودع والاتصال بزملائك فقط من خلال التطبيق",
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Text('Help'),
+                    ),
                   ],
-                )),
-          ]),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
