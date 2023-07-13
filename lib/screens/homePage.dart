@@ -22,7 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
     MyItems(),
     ProfilePage(),
     houses(),
-    camping(),
+    Camp(),
     My_stock()
   ];
 

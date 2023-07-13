@@ -148,7 +148,6 @@ class AddEmployeeDialog extends StatelessWidget {
               phone: phoneController.text,
             );
 
-            // Call the onEmployeeAdded callback with the new employee
             onEmployeeAdded(employee);
           },
           child: Text('Add'),
