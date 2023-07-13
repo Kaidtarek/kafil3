@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kafil/widget/add_camp.dart';
 import 'package:kafil/widget/edit_camp.dart';
 import 'package:kafil/widget/stockwithSearch.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Camp extends StatefulWidget {
-
   @override
   State<Camp> createState() => _CampState();
 }
@@ -32,28 +33,46 @@ class _CampState extends State<Camp> {
         },
         child: Icon(Icons.add),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              height: 150,
-              child: StockwithSearch(),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Container(
-              color: Colors.deepPurple,
-              height: 2,
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Flexible(
-              child: ListView.builder(
-                itemCount: camping_info.length,
-                itemBuilder: (context, index) {
-                  return Card(
+      body: Column(
+        children: [
+          Container(
+            height: 150,
+            child: StockwithSearch(),
+          ),
+          SizedBox(height: 16),
+          Container(
+            color: Colors.deepPurple,
+            height: 2,
+          ),
+          SizedBox(height: 8),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('camping').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+
+                List<Gotocamping> camping_info = snapshot.data!.docs.map((doc) {
+                  // Map the Firestore document data to your Gotocamping model class
+                  return Gotocamping(
+                    camping_name: doc['camping_name'],
+                    place: doc['place'],
+                    startDate: doc['startDate'].toDate(),
+                    finishDate: doc['finishDate'].toDate(),
+                    num_ppl: doc['num_ppl'],
+                    num_employee: doc['num_employee'],
+                  );
+                }).toList();
+
+                return ListView.builder(
+                  itemCount: camping_info.length,
+                  itemBuilder: (context, index) {
+                    return Card(
                       color: const Color.fromARGB(255, 255, 250, 250),
                       child: ListTile(
                         title: Text(camping_info[index].camping_name ?? ''),
@@ -62,7 +81,7 @@ class _CampState extends State<Camp> {
                           children: [
                             Row(
                               children: [
-                                Text("to:  "),
+                                Text("Destination:  "),
                                 Text(
                                   '${camping_info[index].place ?? ''}',
                                   style: TextStyle(color: Colors.deepPurple),
@@ -72,7 +91,7 @@ class _CampState extends State<Camp> {
                             SizedBox(height: 8),
                             Row(
                               children: [
-                                Text("Start: "),
+                                Text("Start Date: "),
                                 Text(
                                   '${DateFormat.yMd().format(camping_info[index].startDate!)}',
                                 ),
@@ -80,7 +99,7 @@ class _CampState extends State<Camp> {
                             ),
                             Row(
                               children: [
-                                Text("Finish: "),
+                                Text("Finish Date: "),
                                 Text(
                                   '${DateFormat.yMd().format(camping_info[index].finishDate!)}',
                                 ),
@@ -88,7 +107,7 @@ class _CampState extends State<Camp> {
                             ),
                             Row(
                               children: [
-                                Text("with: "),
+                                Text("Number of People: "),
                                 Text(
                                   '${camping_info[index].num_ppl}',
                                 ),
@@ -96,11 +115,11 @@ class _CampState extends State<Camp> {
                             ),
                             Row(
                               children: [
-                                Text("by: "),
+                                Text("Number of Employees: "),
                                 Text(
                                   '${camping_info[index].num_employee}',
                                 ),
-                                Text(" employee "),
+                                Text(" employees"),
                               ],
                             ),
                           ],
@@ -123,12 +142,14 @@ class _CampState extends State<Camp> {
                             );
                           },
                         ),
-                      ));
-                },
-              ),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -176,135 +197,3 @@ class Gotocamping {
   }
 }
 
-class AddCamping extends StatefulWidget {
-  final Function(Gotocamping) onCampingAdded;
-
-  AddCamping({required this.onCampingAdded});
-
-  @override
-  _AddCampingState createState() => _AddCampingState();
-}
-
-class _AddCampingState extends State<AddCamping> {
-  final TextEditingController camping_nameController = TextEditingController();
-  final TextEditingController placeController = TextEditingController();
-  late DateTime selectedStartDate;
-  late DateTime selectedFinishDate;
-  final TextEditingController num_pplController = TextEditingController();
-  final TextEditingController num_employeeController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    selectedStartDate = DateTime.now();
-    selectedFinishDate = DateTime.now();
-  }
-
-  Future<void> _selectStartDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedStartDate,
-      firstDate: DateTime(2021),
-      lastDate: DateTime(2030),
-    );
-    if (picked != null && picked != selectedStartDate) {
-      setState(() {
-        selectedStartDate = picked;
-      });
-    }
-  }
-
-  Future<void> _selectFinishDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedFinishDate,
-      firstDate: DateTime(2021),
-      lastDate: DateTime(2030),
-    );
-    if (picked != null && picked != selectedFinishDate) {
-      setState(() {
-        selectedFinishDate = picked;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: AlertDialog(
-        title: Text('New Camping'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: camping_nameController,
-              decoration: InputDecoration(labelText: 'اسم الرحلة'),
-            ),
-            TextField(
-              controller: placeController,
-              decoration: InputDecoration(labelText: 'مكان الرحلة'),
-            ),
-            GestureDetector(
-              onTap: () => _selectStartDate(context),
-              child: AbsorbPointer(
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'تاريخ بدء الرحلة',
-                    suffixIcon: Icon(Icons.calendar_today),
-                  ),
-                  controller: TextEditingController(
-                    text: DateFormat.yMd().format(selectedStartDate),
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () => _selectFinishDate(context),
-              child: AbsorbPointer(
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'تاريخ انتهاء الرحلة',
-                    suffixIcon: Icon(Icons.calendar_today),
-                  ),
-                  controller: TextEditingController(
-                    text: DateFormat.yMd().format(selectedFinishDate),
-                  ),
-                ),
-              ),
-            ),
-            TextField(
-              controller: num_pplController,
-              decoration: InputDecoration(labelText: 'عدد الأشخاص المسافرين'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: num_employeeController,
-              decoration: InputDecoration(labelText: 'عدد الموظفين الذاهبين'),
-              keyboardType: TextInputType.number,
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(onPressed: (){
-            Navigator.pop(context);
-          }, child: Text('Cancel',style: TextStyle(color: Colors.blueGrey),)),
-          TextButton(
-            onPressed: () {
-              Gotocamping newcamp = Gotocamping(
-                camping_name: camping_nameController.text,
-                num_employee: int.tryParse(num_employeeController.text) ?? 0,
-                num_ppl: int.tryParse(num_pplController.text) ?? 0,
-                place: placeController.text,
-                startDate: selectedStartDate,
-                finishDate: selectedFinishDate,
-              );
-              widget.onCampingAdded(newcamp);
-              Navigator.pop(context);
-            },
-            child: Text('Add'),
-          ),
-        ],
-      ),
-    );
-  }
-}
