@@ -13,6 +13,7 @@ class AddCamping extends StatefulWidget {
 }
 
 class _AddCampingState extends State<AddCamping> {
+  
   final TextEditingController camping_nameController = TextEditingController();
   final TextEditingController placeController = TextEditingController();
   late DateTime selectedStartDate;
